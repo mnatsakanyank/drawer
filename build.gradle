@@ -1,0 +1,38 @@
+group 'com.springer.drawer'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'eclipse'
+
+jar {
+    baseName = 'drawer'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+def versions = [
+        scala : "2.11.8",
+        scalatest : "2.2.4"
+]
+
+
+dependencies {
+    compile("org.scala-lang:scala-library:${versions.scala}")
+    testCompile("org.scalatest:scalatest_2.11:${versions.scalatest}")
+}
