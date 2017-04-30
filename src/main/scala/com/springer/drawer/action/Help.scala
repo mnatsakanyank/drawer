@@ -4,7 +4,7 @@ import com.springer.drawer.command.Command
 
 case class Help() extends Command with Action {
 
-  override def executeAction(): Unit = {
+  override def execute(): Unit = {
     println(
       """Available commands are:
         |C w h (Canvas)

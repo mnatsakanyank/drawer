@@ -4,7 +4,7 @@ import com.springer.drawer.command.Command
 
 case class Quit() extends Command with Action {
 
-  override def executeAction(): Unit = {
+  override def execute(): Unit = {
     System.exit(1)
   }
 }

@@ -7,62 +7,45 @@ import com.springer.drawer.command.{Canvas, Command}
 import com.springer.drawer.command.CommandFactory._
 
 object Drawer {
-  val scanner: Scanner = new java.util.Scanner(System.in).useDelimiter("[\\r\\n]+")
 
+  val scanner: Scanner = new java.util.Scanner(System.in).useDelimiter("[\\r\\n]+")
 
   def main(args: Array[String]): Unit = {
 
-    val canvas: Canvas = Canvas(20 + 1, 4 + 1)
-      canvas += parseInput("L 1 2 6 2 ").get
-      canvas += parseInput("L 6 3 6 4").get
-      canvas += parseInput("R 16 1 20 3").get
-      canvas += parseInput("B 10 3 o ").get
-//    canvas += Line(1, 2, 6, 2)
-//    canvas += Line(6, 3, 6, 4)
-//    canvas += Rectangle(16, 1, 20, 3)
-//    canvas += BucketFill(10, 3, 'o')
-//    canvas += BucketFill(1, 3, 'o')
-
-    canvas.draw(canvas)
-
-//    while (true) {
-//      val command = scanner.next()
-//
-//      val maybeCommand = parseInput(command)
-//      if (maybeCommand.isDefined) {
-//        maybeCommand.get match {
-//          case action: Action =>
-//            action.executeAction()
-//          case cmd: Command =>
-//            canvas += cmd
-//        }
-//      } else {
-//        Help().executeAction()
-//      }
-//
-//      canvas.draw(canvas)
-//    }
-
-  }
-
-  def askForCanvasCommand(): Canvas = {
-    println("Please insert Canvas command:")
-    while (true) {
-      val command = scanner.next()
-      val maybeCanvasCommand = parseInput(command)
-      if (maybeCanvasCommand.isDefined) {
-        maybeCanvasCommand.get match {
-          case action: Action =>
-            action.executeAction()
-          case canvas: Canvas =>
-            return canvas
-          case _ =>
-        }
-      } else {
-        Help().executeAction()
+    var canvas: Canvas = null
+    while (canvas == null) {
+      println("Please insert Canvas command")
+      val command = askForCommand()
+      if (command.isDefined && command.get.isInstanceOf[Canvas]) {
+        canvas = command.get.asInstanceOf[Canvas]
       }
     }
-    null
+
+    while (true) {
+      println("Please insert command")
+      val command = askForCommand()
+      if (command.isDefined) {
+        canvas += command.get
+        canvas.draw(canvas)
+        println()
+      }
+    }
+  }
+
+  def askForCommand(): Option[Command] = {
+    val command = scanner.next()
+    val maybeCanvasCommand = parseInput(command)
+    if (maybeCanvasCommand.isDefined) {
+      maybeCanvasCommand.get match {
+        case action: Action =>
+          action.execute()
+        case cmd: Command =>
+          return Option(cmd)
+      }
+    } else {
+      Help().execute()
+    }
+    Option.empty
   }
 
 }

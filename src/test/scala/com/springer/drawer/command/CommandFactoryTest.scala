@@ -1,7 +1,6 @@
-package com.springer.command
+package com.springer.drawer.command
 
 import com.springer.drawer.action.{Help, Quit}
-import com.springer.drawer.command._
 
 class CommandFactoryTest extends org.scalatest.FunSuite {
 
@@ -30,16 +29,16 @@ class CommandFactoryTest extends org.scalatest.FunSuite {
     val maybeCommand = CommandFactory.parseInput("R 16 1 20 3 ")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[Rectangle])
-    val line: Rectangle = maybeCommand.get.asInstanceOf[Rectangle]
-    assert(line.x1 == 16 && line.y1 == 1 && line.x2 == 20 && line.y2 == 3)
+    val rectangle: Rectangle = maybeCommand.get.asInstanceOf[Rectangle]
+    assert(rectangle.x1 == 16 && rectangle.y1 == 1 && rectangle.x2 == 20 && rectangle.y2 == 3)
   }
 
   test("Valid Rectangle command R 16 1 20 3 without space at the end") {
     val maybeCommand = CommandFactory.parseInput("R 16 1 20 3")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[Rectangle])
-    val line: Rectangle = maybeCommand.get.asInstanceOf[Rectangle]
-    assert(line.x1 == 16 && line.y1 == 1 && line.x2 == 20 && line.y2 == 3)
+    val rectangle: Rectangle = maybeCommand.get.asInstanceOf[Rectangle]
+    assert(rectangle.x1 == 16 && rectangle.y1 == 1 && rectangle.x2 == 20 && rectangle.y2 == 3)
   }
 
   test("Invalid Rectangle command R 16 1 20") {
@@ -56,16 +55,16 @@ class CommandFactoryTest extends org.scalatest.FunSuite {
     val maybeCommand = CommandFactory.parseInput("C 20 4 ")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[Canvas])
-    val line: Canvas = maybeCommand.get.asInstanceOf[Canvas]
-    assert(line.height == 4 && line.width == 20)
+    val canvas: Canvas = maybeCommand.get.asInstanceOf[Canvas]
+    assert(canvas.height == 5 && canvas.width == 21)
   }
 
   test("Valid Canvas command C 20 4 without space at the end") {
     val maybeCommand = CommandFactory.parseInput("C 4 20")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[Canvas])
-    val line: Canvas = maybeCommand.get.asInstanceOf[Canvas]
-    assert(line.height == 20 && line.width == 4)
+    val canvas: Canvas = maybeCommand.get.asInstanceOf[Canvas]
+    assert(canvas.height == 21 && canvas.width == 5)
   }
 
   test("Invalid Canvas command C 1") {
@@ -77,24 +76,24 @@ class CommandFactoryTest extends org.scalatest.FunSuite {
     val maybeCommand = CommandFactory.parseInput("B 10 3 o ")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[BucketFill])
-    val line: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
-    assert(line.x == 10 && line.y == 3 && line.c == 'o')
+    val bucketFill: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
+    assert(bucketFill.x == 10 && bucketFill.y == 3 && bucketFill.color == 'o')
   }
 
   test("Valid BucketFill command with special symbol as color B 10 3 ! ") {
     val maybeCommand = CommandFactory.parseInput("B 10 3 ! ")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[BucketFill])
-    val line: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
-    assert(line.x == 10 && line.y == 3 && line.c == '!')
+    val bucketFill: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
+    assert(bucketFill.x == 10 && bucketFill.y == 3 && bucketFill.color == '!')
   }
 
   test("Valid BucketFill command C 20 4 without space at the end") {
     val maybeCommand = CommandFactory.parseInput("B 10 3 o")
     assert(maybeCommand.isDefined)
     assert(maybeCommand.get.isInstanceOf[BucketFill])
-    val line: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
-    assert(line.x == 10 && line.y == 3 && line.c == 'o')
+    val bucketFill: BucketFill = maybeCommand.get.asInstanceOf[BucketFill]
+    assert(bucketFill.x == 10 && bucketFill.y == 3 && bucketFill.color == 'o')
   }
 
   test("Invalid BucketFill command B 10 3") {
