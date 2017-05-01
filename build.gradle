@@ -1,22 +1,21 @@
 group 'com.springer.drawer'
 version '1.0-SNAPSHOT'
 
+
 buildscript {
-    ext {
-        springBootVersion = '1.4.1.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
 }
 
-apply plugin: 'java'
 apply plugin: 'scala'
-apply plugin: 'eclipse'
+apply plugin: 'gradle-one-jar'
 
-jar {
-    baseName = 'drawer'
-    version = '0.0.1-SNAPSHOT'
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
 }
 
 sourceCompatibility = 1.8
@@ -27,12 +26,33 @@ repositories {
 }
 
 def versions = [
-        scala : "2.11.8",
-        scalatest : "2.2.4"
+        scala    : "2.11.8",
+        scalatest: "2.2.4"
 ]
+
+def mainClassName = "com.springer.drawer.Main"
 
 
 dependencies {
     compile("org.scala-lang:scala-library:${versions.scala}")
     testCompile("org.scalatest:scalatest_2.11:${versions.scalatest}")
 }
+
+task buildMyJar(type: OneJar) {
+    mainClass = mainClassName
+    archiveName = "drawer-1.0.jar"
+    useStable = false
+}
+
+task makePretty(type: Delete) {
+    delete "build/libs/drawer-1.0-SNAPSHOT.jar"
+    followSymlinks = true
+}
+
+build.dependsOn buildMyJar
+buildMyJar.finalizedBy makePretty
+
+// aliases
+task fatJar(dependsOn: buildMyJar)
+task uberJar(dependsOn: buildMyJar)
+
