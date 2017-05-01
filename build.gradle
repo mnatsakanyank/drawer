@@ -4,15 +4,22 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
     }
+
     dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
     }
 }
 
 apply plugin: 'scala'
-apply plugin: 'gradle-one-jar'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+mainClassName = "com.springer.drawer.Main"
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.13'
@@ -30,7 +37,7 @@ def versions = [
         scalatest: "2.2.4"
 ]
 
-def mainClassName = "com.springer.drawer.Main"
+
 
 
 dependencies {
@@ -38,21 +45,24 @@ dependencies {
     testCompile("org.scalatest:scalatest_2.11:${versions.scalatest}")
 }
 
-task buildMyJar(type: OneJar) {
-    mainClass = mainClassName
-    archiveName = "drawer-1.0.jar"
-    useStable = false
+shadowJar {
+    baseName = 'drawer-1.0'
+    classifier = null
+    version = null
 }
+
 
 task makePretty(type: Delete) {
     delete "build/libs/drawer-1.0-SNAPSHOT.jar"
     followSymlinks = true
 }
 
-build.dependsOn buildMyJar
-buildMyJar.finalizedBy makePretty
+build.dependsOn shadowJar
+jar.dependsOn shadowJar
+shadowJar.dependsOn test
+shadowJar.finalizedBy makePretty
 
 // aliases
-task fatJar(dependsOn: buildMyJar)
-task uberJar(dependsOn: buildMyJar)
+task fatJar(dependsOn: shadowJar)
+task uberJar(dependsOn: shadowJar)
 
