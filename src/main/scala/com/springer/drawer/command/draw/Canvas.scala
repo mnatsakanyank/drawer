@@ -24,15 +24,14 @@ case class Canvas(width: Int,
   }
 
   private def drawCanvas(canvas: Canvas) = {
-    for (y <- 0 to canvas.canvas(0).length) {
-      for (x <- canvas.canvas.indices) {
+    for (y <- 0 to canvas.canvas(0).length;
+         x <- canvas.canvas.indices) {
         if ((y == 0 || y == height) && x <= width) {
           canvas.canvas(x)(y) = c1
         }
         else if ((x == 0 || x == width) && y <= height) {
           canvas.canvas(x)(y) = c2
         }
-      }
     }
   }
 
