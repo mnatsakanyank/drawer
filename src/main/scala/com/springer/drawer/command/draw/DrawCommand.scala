@@ -4,4 +4,5 @@ import com.springer.drawer.command.Command
 
 trait DrawCommand extends Command {
   def draw(canvas: Canvas): Unit
+  def isValidForCanvas(canvas: Canvas): Boolean
 }

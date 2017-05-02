@@ -13,4 +13,11 @@ case class Rectangle(x1: Int,
            ((y == y1 || y == y2) && x1 <= x && x <= x2))
       yield canvas.canvas(x)(y) = color
   }
+
+  override def isValidForCanvas(canvas: Canvas): Boolean = {
+    x1 < canvas.width &&
+      x2 < canvas.width &&
+      y1 < canvas.height &&
+      y2 < canvas.height
+  }
 }

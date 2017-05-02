@@ -32,4 +32,9 @@ case class BucketFill(x: Int,
       fill(x, y - 1, canvas, newColor, oldColor)
     }
   }
+
+  override def isValidForCanvas(canvas: Canvas): Boolean = {
+    x < canvas.width &&
+      y < canvas.height
+  }
 }

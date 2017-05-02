@@ -27,9 +27,14 @@ object Main extends App {
     println("Please insert command")
     val command = askForCommand()
     if (command.isDefined) {
-      canvas = canvas += command.get.asInstanceOf[DrawCommand]
-      canvas.draw(canvas)
-      println()
+      var drawCommand = command.get.asInstanceOf[DrawCommand]
+      if (drawCommand.isValidForCanvas(canvas)) {
+        canvas = canvas += drawCommand
+        canvas.draw(canvas)
+        println()
+      } else {
+        println("Command is invalid for current canvas")
+      }
     }
   }
 

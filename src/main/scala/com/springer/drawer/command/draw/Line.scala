@@ -12,4 +12,11 @@ case class Line(x1: Int,
          if x >= x1 && x <= x2 && y >= y1 && y <= y2)
       yield canvas.canvas(x)(y) = color
   }
+
+  override def isValidForCanvas(canvas: Canvas): Boolean = {
+    x1 < canvas.width &&
+      x2 < canvas.width &&
+      y1 < canvas.height &&
+      y2 < canvas.height
+  }
 }

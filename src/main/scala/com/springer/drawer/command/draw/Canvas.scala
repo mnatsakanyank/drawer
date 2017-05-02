@@ -26,12 +26,12 @@ case class Canvas(width: Int,
   private def drawCanvas(canvas: Canvas) = {
     for (y <- 0 to canvas.canvas(0).length;
          x <- canvas.canvas.indices) {
-        if ((y == 0 || y == height) && x <= width) {
-          canvas.canvas(x)(y) = c1
-        }
-        else if ((x == 0 || x == width) && y <= height) {
-          canvas.canvas(x)(y) = c2
-        }
+      if ((y == 0 || y == height) && x <= width) {
+        canvas.canvas(x)(y) = c1
+      }
+      else if ((x == 0 || x == width) && y <= height) {
+        canvas.canvas(x)(y) = c2
+      }
     }
   }
 
@@ -49,6 +49,11 @@ case class Canvas(width: Int,
   }
 
   def +=(c: DrawCommand): Canvas = {
-    copy(commands = commands+=c)
+    copy(commands = commands += c)
+  }
+
+  override def isValidForCanvas(canvas: Canvas): Boolean = {
+    width < canvas.width &&
+      height < canvas.height
   }
 }

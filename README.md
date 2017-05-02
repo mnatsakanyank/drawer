@@ -39,4 +39,5 @@ To build and run jar file
 
 Can Be improved 
 -----------
-For BucketFill command is used recursion which can be replaced with non-recursive implementation using stack  
+* For BucketFill command is used recursion which can be replaced with non-recursive implementation using stack.
+* I have used mutable approach for Drawing part but now i am thinking that immutable would be better, however i dont want to refactor everything again now, as not much time left, happy to do that if you are interested though
