@@ -1,7 +1,7 @@
 # Drawer
 -----------
 
-User Service is an application for handling and processing Events via socket connections.
+Drawer is an application for drawing geometric objects on command line 
 
 Supported commands
 * Available commands are:
@@ -17,8 +17,8 @@ Implementation details
 
 * Regex is used for parsing and validating input commands
 * Two types of commands are supported 
-    * Actions for printing help or exit the app
-    * DrawCommand for drawing 
+    * Actions for printing help or exiting the app
+    * DrawCommand for drawing geometric objects
     
 
 

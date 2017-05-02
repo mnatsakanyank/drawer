@@ -3,20 +3,22 @@ package com.springer.drawer.command
 import com.springer.drawer.command.action.{Help, Quit}
 import com.springer.drawer.command.draw.{BucketFill, Canvas, Line, Rectangle}
 
+import scala.collection.mutable.ListBuffer
+
 
 object CommandFactory {
 
-  val CanvasRegexp= "[C](\\s+\\d+){2}\\s*"
-  val BucketFillRegexp= "[B](\\s+\\d+){2}\\s+.\\s*"
-  val RectangleRegexp= "[R](\\s+\\d+){4}\\s*"
-  val LineRegexp= "[L](\\s+\\d+){4}\\s*"
-  val ValidCommandRegexp= "([A-Z](\\s+\\d+){1,4})\\s*.*\\s*|(Q|H)\\s*"
-  val DigitsRegexp= "\\D+"
+  val CanvasRegexp = "[C](\\s+\\d+){2}\\s*"
+  val BucketFillRegexp = "[B](\\s+\\d+){2}\\s+.\\s*"
+  val RectangleRegexp = "[R](\\s+\\d+){4}\\s*"
+  val LineRegexp = "[L](\\s+\\d+){4}\\s*"
+  val ValidCommandRegexp = "([A-Z](\\s+\\d+){1,4})\\s*.*\\s*|(Q|H)\\s*"
+  val DigitsRegexp = "\\D+"
 
   def buildCanvas(maybeCommand: String): Option[Command] = {
     val spl: Array[String] = maybeCommand.split(DigitsRegexp)
     Option(Canvas(spl(1).toInt + 1,
-      spl(2).toInt + 1))
+      spl(2).toInt + 1, ListBuffer()))
   }
 
   def buildBucketFill(maybeCommand: String): Option[Command] = {
@@ -56,10 +58,10 @@ object CommandFactory {
     }
 
     val command: Option[Command] = maybeCommandTrim(0) match {
-      case 'C' => buildCommand(maybeCommand,() => buildCanvas(maybeCommand),CanvasRegexp)
-      case 'B' => buildCommand(maybeCommand,() => buildBucketFill(maybeCommand), BucketFillRegexp)
-      case 'R' => buildCommand(maybeCommand,() => buildRectangle(maybeCommand), RectangleRegexp)
-      case 'L' => buildCommand(maybeCommand,() => buildLine(maybeCommand), LineRegexp)
+      case 'C' => buildCommand(maybeCommand, () => buildCanvas(maybeCommand), CanvasRegexp)
+      case 'B' => buildCommand(maybeCommand, () => buildBucketFill(maybeCommand), BucketFillRegexp)
+      case 'R' => buildCommand(maybeCommand, () => buildRectangle(maybeCommand), RectangleRegexp)
+      case 'L' => buildCommand(maybeCommand, () => buildLine(maybeCommand), LineRegexp)
       case 'Q' => Option(Quit)
       case 'H' => Option(Help)
       case _ => Option.empty

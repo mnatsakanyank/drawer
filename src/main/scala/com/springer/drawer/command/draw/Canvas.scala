@@ -1,15 +1,14 @@
 package com.springer.drawer.command.draw
 
-import com.springer.drawer.command.Command
-
 import scala.collection.mutable.ListBuffer
 
 case class Canvas(width: Int,
                   height: Int,
+                  commands: ListBuffer[DrawCommand],
                   c1: Char = '-',
-                  c2: Char = '|') extends DrawCommand {
+                  c2: Char = '|',
+                  emptyChar: Char = ' ') extends DrawCommand {
 
-  val commands: ListBuffer[DrawCommand] = ListBuffer()
   val canvas: Array[Array[Char]] = Array.ofDim[Char](width + 2, height + 2)
 
   override def draw(canvas: Canvas): Unit = {
@@ -42,7 +41,7 @@ case class Canvas(width: Int,
       println()
       for (x <- 0 to canvas.width) {
         if (canvas.canvas(x)(y) == 0) {
-          print(" ")
+          print(emptyChar)
         } else {
           print(canvas.canvas(x)(y))
         }
@@ -50,7 +49,7 @@ case class Canvas(width: Int,
     }
   }
 
-  def +=(c: DrawCommand): Unit = {
-    commands += c
+  def +=(c: DrawCommand): Canvas = {
+    copy(commands = commands+=c)
   }
 }

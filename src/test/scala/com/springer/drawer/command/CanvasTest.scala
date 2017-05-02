@@ -3,12 +3,14 @@ package com.springer.drawer.command
 import com.springer.drawer.command.draw.{BucketFill, Canvas, Line, Rectangle}
 import org.scalatest.{BeforeAndAfter, FunSuite, Matchers}
 
+import scala.collection.mutable.ListBuffer
+
 class CanvasTest extends FunSuite with Matchers with BeforeAndAfter {
 
   var canvas: Canvas = _
 
   before {
-    canvas = Canvas(21, 5)
+    canvas = Canvas(21, 5, ListBuffer())
   }
 
   test("Canvas with horizontal Line") {
@@ -39,12 +41,28 @@ class CanvasTest extends FunSuite with Matchers with BeforeAndAfter {
   }
 
   test("Canvas with Rectangle") {
-    val bucketFill: Rectangle = Rectangle(16, 1, 20, 3)
-    canvas += bucketFill
+    val rectangle: Rectangle = Rectangle(16, 1, 20, 3)
+    canvas += rectangle
     exactly(1, canvas.commands)
-    canvas.commands should contain only bucketFill
+    canvas.commands should contain only rectangle
     canvas.draw(canvas)
-    assertRectangle(canvas.canvas, bucketFill)
+    assertRectangle(canvas.canvas, rectangle)
+  }
+
+  test("Canvas with Rectangle and BucketFill") {
+    val rectangle: Rectangle = Rectangle(16, 1, 20, 3)
+    canvas += rectangle
+    exactly(1, canvas.commands)
+    canvas.commands should contain only rectangle
+    canvas.draw(canvas)
+    assertRectangle(canvas.canvas, rectangle)
+
+    val bucketFill: BucketFill = BucketFill(10, 3, 'o')
+    canvas += bucketFill
+
+    canvas.draw(canvas)
+    assert(canvas.canvas(17)(2) == 0)
+    assert(canvas.canvas(18)(2) == 0)
   }
 
 
