@@ -2,9 +2,10 @@ package com.springer.drawer
 
 import java.util.Scanner
 
-import com.springer.drawer.action.{Action, Help}
-import com.springer.drawer.command.{Canvas, Command}
+import com.springer.drawer.command.action.{Action, Help}
+import com.springer.drawer.command.Command
 import com.springer.drawer.command.CommandFactory._
+import com.springer.drawer.command.draw.{Canvas, DrawCommand}
 
 object Main extends App {
 
@@ -17,6 +18,8 @@ object Main extends App {
     val command = askForCommand()
     if (command.isDefined && command.get.isInstanceOf[Canvas]) {
       canvas = command.get.asInstanceOf[Canvas]
+      canvas.draw(canvas)
+      println()
     }
   }
 
@@ -24,7 +27,7 @@ object Main extends App {
     println("Please insert command")
     val command = askForCommand()
     if (command.isDefined) {
-      canvas += command.get
+      canvas += command.get.asInstanceOf[DrawCommand]
       canvas.draw(canvas)
       println()
     }
@@ -41,7 +44,7 @@ object Main extends App {
           return Option(cmd)
       }
     } else {
-      Help().execute()
+      Help.execute()
     }
     Option.empty
   }

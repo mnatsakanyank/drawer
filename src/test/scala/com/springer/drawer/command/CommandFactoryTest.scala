@@ -1,6 +1,7 @@
 package com.springer.drawer.command
 
-import com.springer.drawer.action.{Help, Quit}
+import com.springer.drawer.command.action.{Help, Quit}
+import com.springer.drawer.command.draw.{BucketFill, Canvas, Line, Rectangle}
 
 class CommandFactoryTest extends org.scalatest.FunSuite {
 
@@ -104,12 +105,12 @@ class CommandFactoryTest extends org.scalatest.FunSuite {
   test("Valid Quit command") {
     val maybeCommand = CommandFactory.parseInput("Q")
     assert(maybeCommand.isDefined)
-    assert(maybeCommand.get.isInstanceOf[Quit])
+    assert(maybeCommand.get.isInstanceOf[Quit.type])
   }
 
   test("Valid Help command") {
     val maybeCommand = CommandFactory.parseInput("H")
     assert(maybeCommand.isDefined)
-    assert(maybeCommand.get.isInstanceOf[Help])
+    assert(maybeCommand.get.isInstanceOf[Help.type])
   }
 }

@@ -1,8 +1,8 @@
-package com.springer.drawer.command
+package com.springer.drawer.command.draw
 
 case class BucketFill(x: Int,
                       y: Int,
-                      color: Char) extends Command {
+                      color: Char) extends DrawCommand {
 
   override def draw(canvas: Canvas): Unit = {
     fill(x, y, canvas, color)

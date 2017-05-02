@@ -1,8 +1,6 @@
-package com.springer.drawer.action
+package com.springer.drawer.command.action
 
-import com.springer.drawer.command.Command
-
-case class Help() extends Command with Action {
+object Help extends Action {
 
   override def execute(): Unit = {
     println(

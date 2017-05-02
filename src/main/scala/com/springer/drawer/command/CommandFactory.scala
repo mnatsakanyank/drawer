@@ -1,6 +1,7 @@
 package com.springer.drawer.command
 
-import com.springer.drawer.action.{Help, Quit}
+import com.springer.drawer.command.action.{Help, Quit}
+import com.springer.drawer.command.draw.{BucketFill, Canvas, Line, Rectangle}
 
 
 object CommandFactory {
@@ -59,8 +60,8 @@ object CommandFactory {
       case 'B' => buildCommand(maybeCommand,() => buildBucketFill(maybeCommand), BucketFillRegexp)
       case 'R' => buildCommand(maybeCommand,() => buildRectangle(maybeCommand), RectangleRegexp)
       case 'L' => buildCommand(maybeCommand,() => buildLine(maybeCommand), LineRegexp)
-      case 'Q' => Option(Quit())
-      case 'H' => Option(Help())
+      case 'Q' => Option(Quit)
+      case 'H' => Option(Help)
       case _ => Option.empty
     }
 

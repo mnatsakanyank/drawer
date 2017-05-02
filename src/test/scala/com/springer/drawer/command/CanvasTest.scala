@@ -1,5 +1,6 @@
 package com.springer.drawer.command
 
+import com.springer.drawer.command.draw.{BucketFill, Canvas, Line, Rectangle}
 import org.scalatest.{BeforeAndAfter, FunSuite, Matchers}
 
 class CanvasTest extends FunSuite with Matchers with BeforeAndAfter {
