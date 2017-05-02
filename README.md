@@ -7,7 +7,7 @@ Supported commands
 * Available commands are:
 * C w h - draws Canvas
 * L x1 y1 x2 y2  - draws Line
-* R x1 y1 x2 y2 (Rectangle)
+* R x1 y1 x2 y2 - draws Rectangle
 * B x y c - draws BucketFill
 * Q - Quits program
 * H - prints Help
